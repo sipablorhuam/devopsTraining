@@ -3,22 +3,17 @@
     state: present
     system: yes
 
-- name: Creating user app1
+- name: Creating users
   user:
-    name: app1
+    name: "{{ item }}"
     state: present
     shell: /bin/bash
-    home: /opt/app1
+    home: "/opt/{{ item }}"
     groups: app
-
-- name: Creating user app2
-  user:
-    name: app2
-    state: present
-    shell: /bin/bash
-    home: /opt/app2
-    groups: app
-
+  with_items:
+   - app1
+   - app2
+   
 - name: Installing Basic Software
   apt: pkg={{ item  }} state=installed
   with_items:
